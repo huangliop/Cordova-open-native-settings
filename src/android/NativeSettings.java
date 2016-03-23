@@ -8,16 +8,13 @@
 
 package com.phonegap.plugins.nativesettings;
 
-import org.json.JSONArray;
-
 import android.content.Intent;
-import android.content.Context;
-
-import android.provider.Settings;
+import android.net.Uri;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.PluginResult;
+import org.json.JSONArray;
 
 public class NativeSettings extends CordovaPlugin {
 
@@ -40,7 +37,10 @@ public class NativeSettings extends CordovaPlugin {
         } else if (action.equals("apn")) {
             this.cordova.getActivity().startActivity(new Intent(android.provider.Settings.ACTION_APN_SETTINGS));
         } else if (action.equals("application_details")) {
-            this.cordova.getActivity().startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS));
+			Intent i=new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri=Uri.fromParts("package",cordova.getActivity().getPackageName(),null);
+            i.setData(uri);
+            this.cordova.getActivity().startActivity(i);
         } else if (action.equals("application_development")) {
             this.cordova.getActivity().startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DEVELOPMENT_SETTINGS));
         } else if (action.equals("application")) {
@@ -135,4 +135,3 @@ public class NativeSettings extends CordovaPlugin {
 
     }
 }
-
